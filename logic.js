@@ -46,8 +46,6 @@ const Tweeter = function () {
         };
 
         _posts.push(newPost)
-       // Renderer.renderPosts(getPosts())
-        //postIdCounter++
     }
 
     let removePost = function (postID) {

@@ -1,9 +1,6 @@
 let Renderer = function () {
     let renderPosts = function (posts) {
-       // $(".comment").empty()
-
         $("#posts").empty()
-        
         
         for (let post of posts) {
             
