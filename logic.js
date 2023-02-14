@@ -29,18 +29,27 @@ const Tweeter = function () {
         },
     ]
 
-    let postIdCounter = _posts.length
-    let commentIdCounter 
+    findPostIndex = function(postID){
+        for (let post of _posts) {
+            if (post.id == postID) {
+              return _posts.indexOf(post)
+            }
+        }
+        return -1
+    }
+
+    let _postIdCounter = _posts.length
+    let _commentIdCounter 
 
     const getPosts = () => _posts
 
     let addPost = function (myText) {
-        postIdCounter++
+        _postIdCounter++
 
         let newPost = {
             
             text: myText,
-            id: "p"+postIdCounter,
+            id: "p"+_postIdCounter,
             comments: [],
 
         };
@@ -49,22 +58,19 @@ const Tweeter = function () {
     }
 
     let removePost = function (postID) {
-        for (let post of _posts) {
-            if (post.id == postID) {
-                _posts.splice(_posts.indexOf(post),1)
-            }
-        }
+        let postIndex = findPostIndex(postID)
+        _posts.splice(postIndex,1)
         return getPosts()
     }
 
     let addComment = function (postID, commentText) {
 
         for (let post of _posts) {
-            commentIdCounter = post.comments.length
-            commentIdCounter++
+            _commentIdCounter = post.comments.length
+            _commentIdCounter++
             if (post.id == postID) {
                 let newComment = {
-                    id: "c"+commentIdCounter,
+                    id: "c"+_commentIdCounter,
                     text: commentText,
                 };
                 post.comments.push(newComment)
@@ -74,20 +80,16 @@ const Tweeter = function () {
     }
 
     let removeComment = function (postID, commentID) {
-        for(let post of _posts){
-            if(post.id == postID){
-                for(let comment of post.comments){
-                    if(comment.id == commentID){
-                        post.comments.splice(post.comments.indexOf(comment),1) 
-                    }
-                }
+
+        let postIndex = findPostIndex(postID)
+        let post = _posts[postIndex]
+        for(let comment of _posts[postIndex].comments){
+            if(comment.id == commentID){
+                post.comments.splice(post.comments.indexOf(comment),1) 
             }
         }
-
     }
-
-
-
+    
     return {
         getPosts:getPosts,
         addPost:addPost,
